@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
                     net2.inputcount = lines2[i].wordcount - 1;
                     printf("Number of inputs in function2: %d\n", net2.inputcount);
                     net2.inputs = (char **)malloc((net2.inputcount)*sizeof(char *));
-                    for(j = 1; j < lines2[i].wordcount; j++) 
+                    for(j = 1; j < lines2[i].wordcount; j++) { 
                         net2.inputs[j-1] = (char *)malloc((strlen(lines2[i].words[j])+1)*sizeof(char));                        
                         strcpy(net2.inputs[j-1], lines2[i].words[j]);
                     }
@@ -182,20 +182,20 @@ int main(int argc, char** argv) {
                     for(j = 1; j < lines2[i].wordcount; j++) {
                         net2.outputs[j-1] = (char *)malloc((strlen(lines2[i].words[j])+1)*sizeof(char));
                         strcpy(net2.outputs[j-1], lines2[i].words[j]);
+                    
                     }
                 }
             }
+        
+            // count number of intermediate nets
+        
+            // deallocate memory from lines1 & lines2
+            freelines(lines1, M);
+            freelines(lines2, N);
             
-            
-        // count number of intermediate nets
-            
-        // deallocate memory from lines1 & lines2
-        freelines(lines1, M);
-        freelines(lines2, N);
-            
-        // deallocate memory from net1 & net2
-        freenets(net1);
-        freenets(net2);
+            // deallocate memory from net1 & net2
+            freenets(net1);
+            freenets(net2);
         }
     }
     return (EXIT_SUCCESS);
