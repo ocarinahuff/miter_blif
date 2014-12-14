@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
     struct LINES *lines2;
     // display an error if an incorrect number of arguments are entered.
     if(argc != 3) {
-        printf("Please type in both filenames.\n");
+        printf("USAGE: miter_blif.exe file1.blif file2.blif\n");
     }
     else {
         // open the files.
