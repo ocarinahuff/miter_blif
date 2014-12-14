@@ -98,8 +98,8 @@ int main(int argc, char** argv) {
     int M, N, i, j;
     // char buffer[BUF_SIZE];
                 
-    struct LINES *lines1;
-    struct LINES *lines2;
+    struct LINES *lines1, *lines2;
+    struct NETS net1, net2;
     // display an error if an incorrect number of arguments are entered.
     if(argc != 3) {
         printf("USAGE: miter_blif.exe file1.blif file2.blif\n");
@@ -145,7 +145,6 @@ int main(int argc, char** argv) {
             printf("\n");
             
             // count number of inputs
-            struct NETS net1;
             for(i = 0; i < M; i++) {
                 if(!strcmp(lines1[i].words[0],".inputs")) {
                     net1.inputcount = lines1[i].wordcount - 1;
@@ -166,7 +165,6 @@ int main(int argc, char** argv) {
                     }
                 }
             }
-            struct NETS net2;
             for(i = 0; i < N; i++) {
                 if(!strcmp(lines2[i].words[0],".inputs")) {
                     net2.inputcount = lines2[i].wordcount - 1;
@@ -188,15 +186,16 @@ int main(int argc, char** argv) {
                 }
             }
             
-            // count number of intermediate nets
             
-            // deallocate memory from lines1 & lines2
-            freelines(lines1, M);
-            freelines(lines2, N);
+        // count number of intermediate nets
             
-            // deallocate memory from net1 & net2
-            freenets(net1);
-            freenets(net2);
+        // deallocate memory from lines1 & lines2
+        freelines(lines1, M);
+        freelines(lines2, N);
+            
+        // deallocate memory from net1 & net2
+        freenets(net1);
+        freenets(net2);
         }
     }
     return (EXIT_SUCCESS);
