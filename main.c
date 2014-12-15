@@ -8,15 +8,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "lines.h"
+#ifndef BUF_SIZE
 #define BUF_SIZE 255
+#endif
+#ifndef MAX_STR_LEN
 #define MAX_STR_LEN 255
-
-struct LINES {
-    char *line;
-    struct LINES *next;
-};
+#endif
 
 // store the input variable.
+/*
 struct NETS {
     int inputcount;
     int outputcount;
@@ -24,37 +25,6 @@ struct NETS {
     char **outputs;
 };
 
-/*
- * Return a linked list of lines from a file
- */
-struct LINES *fgetlines(FILE *file) {
-    char buffer[BUF_SIZE];
-    struct LINES *lines = (struct LINES *)malloc(sizeof(struct LINES));
-    lines->next = NULL;
-    struct LINES *ptr = lines;
-    char *line = fgets(buffer, sizeof(buffer), file);
-    while(line != NULL) {
-        ptr->line = (char *)malloc((strlen(buffer)+1)*sizeof(char));
-        strcpy(ptr->line, buffer);
-        if((line = fgets(buffer, sizeof(buffer), file)) != NULL) {
-            ptr = ptr->next = (struct LINES *)malloc(sizeof(struct LINES));
-            ptr->next = NULL;
-        }
-    }
-    return lines;
-}
-
-void freelines(struct LINES *lines) {
-    struct LINES *head, *ptr;
-    head = ptr = lines;
-    while(ptr != NULL) {
-        ptr = ptr->next;
-        free(head->line);
-        free(head);
-        head = ptr;
-    }
-}
-/*
 void freenets(struct NETS nets) {
     int i;
     for(i = 0; i < nets.inputcount; i++)
@@ -70,7 +40,7 @@ void freenets(struct NETS nets) {
  */
 int main(int argc, char** argv) {
     FILE *file1, *file2, *file3;
-    // char buffer[BUF_SIZE];
+    char buffer[BUF_SIZE];
                 
     struct LINES *lines1, *lines2;
     // display an error if an incorrect number of arguments are entered.
@@ -97,12 +67,67 @@ int main(int argc, char** argv) {
             fprintf(file3, ".model miter\n");
             fprintf(file3, lines1->next->line);
             struct LINES *ptr;
+            char *cptr;
+            /*
+             * state = 0: non-name line.
+             * state = 1: name line.
+             * state = 2: end line.
+             */
+            int state = 0;
             for(ptr = lines1->next->next->next; ptr != NULL; ptr = ptr->next) {
-                fprintf(file3, "%s", ptr->line);
+                strcpy(buffer, ptr->line);
+                for(cptr = strtok(buffer, " \t\r\n\v\f"); cptr != NULL; cptr = strtok(NULL, " \t\r\n\v\f")) {
+                    if(!strcmp(cptr, ".names")) {
+                        fprintf(file3, ".names");
+                        state = 1;
+                        continue;
+                    }
+                    if(!strcmp(cptr, ".end")) {
+                        state = 2;
+                        break;
+                    }
+                    if(state == 1) {
+                        fprintf(file3, " %s_1", cptr);
+                    }
+                }
+                if(state == 0) {
+                    fprintf(file3, "%s", ptr->line);
+                } else if(state == 2) {
+                    state = 0;
+                } else {
+                    state = 0;
+                    fprintf(file3, "\n");
+                }
             }
             for(ptr = lines2->next->next->next; ptr != NULL; ptr = ptr->next) {
-                fprintf(file3, "%s", ptr->line);
+                strcpy(buffer, ptr->line);
+                for(cptr = strtok(buffer, " \t\r\n\v\f"); cptr != NULL; cptr = strtok(NULL, " \t\r\n\v\f")) {
+                    if(!strcmp(cptr, ".names")) {
+                        fprintf(file3, ".names");
+                        state = 1;
+                        continue;
+                    }
+                    if(!strcmp(cptr, ".end")) {
+                        state = 2;
+                        break;
+                    }
+                    if(state == 1) {
+                        fprintf(file3, " %s_2", cptr);
+                    }
+                }
+                if(state == 0) {
+                    fprintf(file3, "%s", ptr->line);
+                } else if(state == 2) {
+                    state = 0;
+                } else {
+                    state = 0;
+                    fprintf(file3, "\n");
+                }
             }
+            // build miter circuit.
+            
+            // close blif with '.end'.
+            fprintf(file3, ".end\n");
             fclose(file3);
                     
             // deallocate memory from lines1 & lines2

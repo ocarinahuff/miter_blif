@@ -1,48 +1,47 @@
 .model miter
 .inputs a b c d
-.names a b f
+.names a_1 b_1 f_1
 1- 1
 -1 1
-.names a b e
+.names a_1 b_1 e_1
 10 1
-.names f c g
+.names f_1 c_1 g_1
 11 1
-.names f u
+.names f_1 u_1
 1 1
-.names g e y
+.names g_1 e_1 y_1
 1- 1
 -1 1
-.names y v
+.names y_1 v_1
 1 1
-.names y d w
+.names y_1 d_1 w_1
 1- 1
 -1 1
-.end
-.names a b h
+.names a_2 b_2 h_2
 11 1
-.names a h b f2
+.names a_2 h_2 b_2 f2_2
 100 1
 010 1
 001 1
 111 1
-.names f2 u
+.names f2_2 u_2
 1 1
-.names f2 c g2
+.names f2_2 c_2 g2_2
 11 1
-.names a b e2
+.names a_2 b_2 e2_2
 10 1
-.names g2 e2 x
+.names g2_2 e2_2 x_2
 11 1
-.names g2 x e2 y2
+.names g2_2 x_2 e2_2 y2_2
 100 1
 010 1
 001 1
 111 1
-.names y2 v
+.names y2_2 v_2
 1 1
-.names y2 d z
+.names y2_2 d_2 z_2
 11 1
-.names y2 z d w
+.names y2_2 z_2 d_2 w_2
 100 1
 010 1
 001 1
