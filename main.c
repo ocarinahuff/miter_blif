@@ -12,8 +12,8 @@
 #define MAX_STR_LEN 255
 
 struct LINES {
-    int wordcount;
-    char **words;
+    int linecount;
+    char **lines;
 };
 
 struct NETS {
@@ -23,49 +23,18 @@ struct NETS {
     char **outputs;
 };
 
-int swordcount(char *line) {
-    char buffer[255];
-    strcpy(buffer,line);
-    char *ptr = strtok(buffer, " ");
-    int count = 0;
-    while(ptr != NULL) {
-        count++;
-        ptr = strtok(NULL, " ");
-    }
-    return count;
-}
-
-/*
- * Return the number of lines in a file.
- */
-int fcountlines(FILE *file) {
-    char buffer[BUF_SIZE];
-    int count = 0;
-    while(fgets(buffer, sizeof(buffer), file) != NULL) {
-        count++;
-    }
-    return count;
-}
-
 /*
  * Return a 2D char array of lines from a file
  */
-struct LINES *fgetlines(FILE *file, int fsize) {
+struct LINES *fgetlines(FILE *file) {
     char buffer[BUF_SIZE];
-    char *ptr;
-    int i, j;
-    struct LINES *lines = (struct LINES *)malloc(fsize*sizeof(struct LINES));
-    for(i = 0; i < fsize; i++) {
-        fgets(buffer, sizeof(buffer), file);
-        lines[i].wordcount = swordcount(buffer);
-        lines[i].words = (char **)malloc((lines[i].wordcount)*sizeof(char *));
-        ptr = strtok(buffer, " ");
-        for(j = 0; ptr != NULL; j++) {
-            lines[i].words[j] = (char *)malloc((strlen(ptr)+1)*sizeof(char));
-            strcpy(lines[i].words[j],ptr);
-            ptr = strtok(NULL, " ");
-        }
+    int linecount;
+    struct LINES *lines = (struct LINES *)malloc(sizeof(struct LINES));
+    for(linecount = 0; fgets(buffer, sizeof(buffer), file) != NULL; linecount++) {
+        lines->lines = (char **)malloc((strlen(buffer)+1)*sizeof(char *));
+        strcpy(buffer,lines->lines);
     }
+    lines->linecount = linecount;
     return lines;
 }
 
@@ -94,7 +63,7 @@ void freenets(struct NETS nets) {
  * 
  */
 int main(int argc, char** argv) {
-    FILE *file1, *file2;
+    FILE *file1, *file2, *file3;
     int M, N, i, j;
     // char buffer[BUF_SIZE];
                 
@@ -127,68 +96,12 @@ int main(int argc, char** argv) {
             fclose(file1);
             fclose(file2);
             
-            // print test output to stdout.
-            printf("\n");
-            for(i = 0; i < M; i++) {
-                printf("%s", lines1[i].words[0]);
-                for(j = 1; j < lines1[i].wordcount; j++) {
-                    printf(" %s", lines1[i].words[j]);
-                }
-            }
-            printf("\n");
-            for(i = 0; i < N; i++) {
-                printf("%s", lines2[i].words[0]);
-                for(j = 1; j < lines2[i].wordcount; j++) {
-                    printf(" %s", lines2[i].words[j]);
-                }
-            }
-            printf("\n");
+            // write lines to file.
+            file3 = fopen("miter.blif", "wt");
+            fprintf(".model miter\n");
             
-            // count number of inputs
-            for(i = 0; i < M; i++) {
-                if(!strcmp(lines1[i].words[0],".inputs")) {
-                    net1.inputcount = lines1[i].wordcount - 1;
-                    printf("Number of inputs in function1: %d\n", net1.inputcount);
-                    net1.inputs = (char **)malloc((net1.inputcount)*sizeof(char *));
-                    for(j = 1; j < lines1[i].wordcount; j++) {
-                        net1.inputs[j-1] = (char *)malloc((strlen(lines1[i].words[j])+1)*sizeof(char));
-                        strcpy(net1.inputs[j-1],lines1[i].words[j]);
-                    }
-                }
-                if(!strcmp(lines1[i].words[0],".outputs")) {
-                    net1.outputcount = lines1[i].wordcount - 1;
-                    printf("Number of outputs in function1: %d\n", net1.outputcount);
-                    net1.outputs = (char **)malloc((net1.outputcount)*sizeof(char *));
-                    for(j = 1; j < lines1[i].wordcount; j++) {
-                        net1.outputs[j-1] = (char *)malloc((strlen(lines1[i].words[j])+1)*sizeof(char));
-                        strcpy(net1.outputs[j-1], lines1[i].words[j]);
-                    }
-                }
-            }
-            for(i = 0; i < N; i++) {
-                if(!strcmp(lines2[i].words[0],".inputs")) {
-                    net2.inputcount = lines2[i].wordcount - 1;
-                    printf("Number of inputs in function2: %d\n", net2.inputcount);
-                    net2.inputs = (char **)malloc((net2.inputcount)*sizeof(char *));
-                    for(j = 1; j < lines2[i].wordcount; j++) { 
-                        net2.inputs[j-1] = (char *)malloc((strlen(lines2[i].words[j])+1)*sizeof(char));                        
-                        strcpy(net2.inputs[j-1], lines2[i].words[j]);
-                    }
-                }
-                if(!strcmp(lines2[i].words[0],".outputs")) {
-                    net2.outputcount = lines2[i].wordcount - 1;
-                    printf("Number of outputs in function2: %d\n", net2.outputcount);
-                    net2.outputs = (char **)malloc((net2.outputcount)*sizeof(char *));
-                    for(j = 1; j < lines2[i].wordcount; j++) {
-                        net2.outputs[j-1] = (char *)malloc((strlen(lines2[i].words[j])+1)*sizeof(char));
-                        strcpy(net2.outputs[j-1], lines2[i].words[j]);
+            fclose(file3);
                     
-                    }
-                }
-            }
-        
-            // count number of intermediate nets
-        
             // deallocate memory from lines1 & lines2
             freelines(lines1, M);
             freelines(lines2, N);
