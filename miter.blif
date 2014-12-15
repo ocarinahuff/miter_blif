@@ -1,0 +1,85 @@
+.model miter
+.model function1
+
+.inputs a b c d
+
+.outputs u v w
+
+.names a b f
+
+1- 1
+
+-1 1
+
+.names a b e
+
+10 1
+
+.names f c g
+
+11 1
+
+.names f u
+
+1 1
+
+.names g e y
+
+1- 1
+
+-1 1
+
+.names y v
+
+1 1
+
+.names y d w
+
+1- 1
+
+-1 1
+
+.end
+
+.model function1
+
+.inputs a b c d
+
+.outputs u v w
+
+.names a b f
+
+1- 1
+
+-1 1
+
+.names a b e
+
+10 1
+
+.names f c g
+
+11 1
+
+.names f u
+
+1 1
+
+.names g e y
+
+1- 1
+
+-1 1
+
+.names y v
+
+1 1
+
+.names y d w
+
+1- 1
+
+-1 1
+
+.end
+
