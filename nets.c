@@ -16,8 +16,8 @@ char **getnets(char *line) {
             cptr != NULL; cptr = strtok(NULL, " \t\r\n"), i++) {
         strcpy(netbuffer[i],cptr);
     }
-    // store count of nets, including net type identifier at beginning of 
-    // pointer array.
+    // store count of nets, plus one, at beginning of 
+    // 2D pointer array.
     nets = (char **)malloc(i*sizeof(char *));
     char netcount[BUF_SIZE];
     sprintf(netcount, "%d", i);
