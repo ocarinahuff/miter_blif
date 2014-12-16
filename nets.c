@@ -11,10 +11,10 @@ char **getnets(char *line) {
     char *cptr;
     char **nets;
     char netbuffer[MAX_NETS][BUF_SIZE];
-    int i;
-    for(cptr = strtok(buffer, " \t\r\n"), i = 0; 
-            cptr != NULL; cptr = strtok(NULL, " \t\r\n"), i++) {
-        strcpy(netbuffer[i],cptr);
+    int i = 0;
+    for(cptr = strtok(buffer, " \t\r\n"); 
+            cptr != NULL; cptr = strtok(NULL, " \t\r\n")) {
+        strcpy(netbuffer[i++],cptr);
     }
     // store count of nets, plus one, at beginning of 
     // 2D pointer array.
