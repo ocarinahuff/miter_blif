@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>lines.h</itemPath>
+      <itemPath>miter.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -15,6 +15,7 @@
                    projectFiles="true">
       <itemPath>lines.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>nets.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -40,9 +41,11 @@
       </compileType>
       <item path="lines.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="lines.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="miter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="nets.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -67,9 +70,11 @@
       </compileType>
       <item path="lines.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="lines.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="miter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="nets.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>

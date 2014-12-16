@@ -3,29 +3,29 @@
 .outputs u v w
 .names a b h
 11 1
-.names a h b f2
+.names a h b f
 100 1
 010 1
 001 1
 111 1
-.names f2 u
+.names f u
 1 1
-.names f2 c g2
+.names f c g
 11 1
-.names a b e2
+.names a b e
 10 1
-.names g2 e2 x
+.names g e x
 11 1
-.names g2 x e2 y2
+.names g x e y
 100 1
 010 1
 001 1
 111 1
-.names y2 v
+.names y v
 1 1
-.names y2 d z
+.names y d z
 11 1
-.names y2 z d w
+.names y z d w
 100 1
 010 1
 001 1

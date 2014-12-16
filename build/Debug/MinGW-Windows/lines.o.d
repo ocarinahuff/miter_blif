@@ -1,3 +1,3 @@
-build/Debug/MinGW-Windows/lines.o: lines.c lines.h
+build/Debug/MinGW-Windows/lines.o: lines.c miter.h
 
-lines.h:
+miter.h:

@@ -5,13 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lines.h"
-#ifndef BUF_SIZE
-#define BUF_SIZE 255
-#endif
-#ifndef MAX_STR_LEN
-#define MAX_STR_LEN 255
-#endif
+#include "miter.h"
 
 /**
  * Return a linked list of lines from a file
@@ -47,5 +41,38 @@ void freelines(struct LINES *lines) {
         free(head->line);
         free(head);
         head = ptr;
+    }
+}
+
+void processlines(FILE *file, struct LINES *lines, char *label, char **inputs) {
+    struct LINES *ptr;
+    char *cptr;
+    char buffer[BUF_SIZE];
+    enum states {NON_NAME, NAME, END};
+    int state = NON_NAME;
+    for(ptr = lines->next->next->next; ptr != NULL; ptr = ptr->next) {
+        strcpy(buffer, ptr->line);
+        for(cptr = strtok(buffer, " \t\r\n"); cptr != NULL; cptr = strtok(NULL, " \t\r\n")) {
+            if(!strcmp(cptr, ".names")) {
+                fprintf(file, ".names");
+                state = NAME;
+                continue;
+            }
+            if(!strcmp(cptr, ".end")) {
+                state = END;
+                break;
+            }
+            if(state == NAME) {
+                fprintf(file, " %s%s", cptr, checknets(cptr, inputs) ? "" : label);
+            }
+        }
+        if(state == NON_NAME) {
+            fprintf(file, "%s", ptr->line);
+        } else if(state == END) {
+            state = NON_NAME;
+        } else {
+            state = NON_NAME;
+            fprintf(file, "\n");
+        }
     }
 }

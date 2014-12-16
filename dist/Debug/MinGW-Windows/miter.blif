@@ -1,11 +1,12 @@
 .model miter
 .inputs a b c d
-.names a_1 b_1 f_1
+.outputs u_1 v_1 w_1 u_2 v_2 w_2
+.names a b f_1
 1- 1
 -1 1
-.names a_1 b_1 e_1
+.names a b e_1
 10 1
-.names f_1 c_1 g_1
+.names f_1 c g_1
 11 1
 .names f_1 u_1
 1 1
@@ -14,36 +15,49 @@
 -1 1
 .names y_1 v_1
 1 1
-.names y_1 d_1 w_1
+.names y_1 d w_1
 1- 1
 -1 1
-.names a_2 b_2 h_2
+.names a b h_2
 11 1
-.names a_2 h_2 b_2 f2_2
+.names a h_2 b f_2
 100 1
 010 1
 001 1
 111 1
-.names f2_2 u_2
+.names f_2 u_2
 1 1
-.names f2_2 c_2 g2_2
+.names f_2 c g_2
 11 1
-.names a_2 b_2 e2_2
+.names a b e_2
 10 1
-.names g2_2 e2_2 x_2
+.names g_2 e_2 x_2
 11 1
-.names g2_2 x_2 e2_2 y2_2
+.names g_2 x_2 e_2 y_2
 100 1
 010 1
 001 1
 111 1
-.names y2_2 v_2
+.names y_2 v_2
 1 1
-.names y2_2 d_2 z_2
+.names y_2 d z_2
 11 1
-.names y2_2 z_2 d_2 w_2
+.names y_2 z_2 d w_2
 100 1
 010 1
 001 1
 111 1
+.names u_1 u_2 out1
+01 1
+10 1
+.names v_1 v_2 out2
+01 1
+10 1
+.names w_1 w_2 out3
+01 1
+10 1
+.names out1 out2 out3 out
+1-- 1
+-1- 1
+--1 1
 .end
